@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+
+import react, { useState } from 'react'
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {Form,Button} from "react-bootstrap";
 
 function App() {
+
+let [value,setValue] = useState ('')
+let Dispatch = useDispatch()
+const data = useSelector((item)=>item.typingtext)
+
+let handleCnge = (e)=>{
+  setValue(e.target.value)
+}
+
+let handleSubmit = (e)=>{
+  e.preventDefault()
+  Dispatch({type:"TYPING_TEXT",payload: value})
+  setValue('')
+}
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <>
+      <div className="text-center">
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control onChange={handleCnge} type="text" placeholder="Enter email" value={value}/>
+        </Form.Group>
+  
+        <Button onClick={handleSubmit} variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+      <h1>{data}</h1>
+      </div>
+   </>
   );
 }
 
